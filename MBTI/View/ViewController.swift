@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ViewController: BaseViewController {
+final class ViewController: BaseViewController {
     
-    let startButton = {
+    private let startButton = {
         let button = UIButton()
         button.configuration = .dalkomStyle(
             title: Constants.UI.Title.start,
@@ -31,7 +31,6 @@ class ViewController: BaseViewController {
             make.height.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.1)
             make.width.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.8)
         }
-
     }
     
     override func configureView() {
