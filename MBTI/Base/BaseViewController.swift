@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import SnapKit
 
 class BaseViewController: UIViewController, UIConfigurable {
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureHierarchy()
+        configureLayout()
+        configureView()
     }
     
     func configureHierarchy() {
@@ -21,8 +27,7 @@ class BaseViewController: UIViewController, UIConfigurable {
     }
     
     func configureView() {
-        view.backgroundColor = .
+        view.backgroundColor = .dalkomWhite
     }
-
 }
 
