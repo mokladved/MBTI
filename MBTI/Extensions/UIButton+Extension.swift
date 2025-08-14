@@ -11,6 +11,7 @@ extension UIButton.Configuration {
     static func dalkomStyle(
         title: String,
         fontSize: CGFloat = 15,
+        fontWeight: UIFont.Weight = .bold,
         bgColor: UIColor = .gray,
         fgColor: UIColor = .black)
     -> UIButton.Configuration {
@@ -20,7 +21,7 @@ extension UIButton.Configuration {
         config.cornerStyle = .capsule
         
         var attributedTitle = AttributedString(title)
-        attributedTitle.font = .systemFont(ofSize: fontSize)
+        attributedTitle.font = .systemFont(ofSize: fontSize, weight: fontWeight)
         config.attributedTitle = attributedTitle
         
         return config
