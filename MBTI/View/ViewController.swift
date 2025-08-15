@@ -31,13 +31,11 @@ final class ViewController: BaseViewController {
     }
     
     @objc private func startButtonTapped() {
-        print(self, #function)
         let nextVC = ProfileSettingViewController()
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
     override func configureHierarchy() {
-        print(self, #function)
         view.addSubview(startButton)
     }
     
@@ -50,8 +48,14 @@ final class ViewController: BaseViewController {
     }
     
     override func configureView() {
-        print(self, #function)
         super.configureView()
+    }
+    
+    override func configureNavigationItem() {
+        let appearance = UINavigationBar.configureAppearance(isFirstScene: true)
+        self.navigationItem.standardAppearance = appearance
+        self.navigationItem.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.tintColor = .black
     }
 }
 

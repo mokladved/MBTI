@@ -28,6 +28,14 @@ class BaseViewController: UIViewController, UIConfigurable {
     
     func configureView() {
         view.backgroundColor = .dalkomWhite
+        configureNavigationItem()
+    }
+    
+    func configureNavigationItem() {
+        let appearance = UINavigationBar.configureAppearance()
+        self.navigationItem.standardAppearance = appearance
+        self.navigationItem.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.tintColor = .black
     }
 }
 

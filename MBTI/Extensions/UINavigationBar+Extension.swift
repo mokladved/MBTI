@@ -8,13 +8,12 @@
 import UIKit
 
 extension UINavigationBar {
-    static func configureAppearange() {
+    static func configureAppearance(isFirstScene: Bool = false) -> UINavigationBarAppearance{
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor : UIColor.clear]
+        appearance.shadowColor = isFirstScene ? .clear : .separator
         
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().tintColor = .black
+        return appearance
     }
 }
