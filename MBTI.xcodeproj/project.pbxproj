@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2BDC8F042E4D185A002E1291 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDC8F032E4D185A002E1291 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2BDC8C412E4C619F002E1291 /* MBTI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MBTI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BDC8F042E4D185A002E1291 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = MBTI;
 			packageProductDependencies = (
+				2BDC8F032E4D185A002E1291 /* SnapKit */,
 			);
 			productName = MBTI;
 			productReference = 2BDC8C412E4C619F002E1291 /* MBTI.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 2BDC8C382E4C619F002E1291;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2BDC8F022E4D185A002E1291 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2BDC8C422E4C619F002E1291 /* Products */;
 			projectDirPath = "";
@@ -347,6 +356,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2BDC8F022E4D185A002E1291 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2BDC8F032E4D185A002E1291 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDC8F022E4D185A002E1291 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2BDC8C392E4C619F002E1291 /* Project object */;
 }
