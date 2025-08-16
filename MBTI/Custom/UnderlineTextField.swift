@@ -7,15 +7,12 @@
 import UIKit
 import SnapKit
 
-class UnderlineTextField: UITextField, UIConfigurable {
-    
-    let underlineView = {
+final class UnderlineTextField: UITextField, UIConfigurable {
+    private let underlineView = {
         let view = UIView()
         view.backgroundColor = .systemGray
         return view
     }()
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

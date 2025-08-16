@@ -38,7 +38,7 @@ final class MBTIButton: UIButton {
             layer.borderColor = UIColor.dalkomBlue.cgColor
         } else {
             backgroundColor = .white
-            setTitleColor(.black, for: .normal)
+            setTitleColor(.lightGray, for: .normal)
             layer.borderColor = UIColor.lightGray.cgColor
         }
     }
