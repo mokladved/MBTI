@@ -22,6 +22,8 @@ enum Constants {
     enum UI {
         enum Title {
             static let profileSetting = "PROFILE SETTING"
+            static let start = "시작하기"
+            static let specialCharacters = "@#$%"
         }
         enum Placeholder {
             static let profileSeting = "닉네임을 입력해주세요 :)"
