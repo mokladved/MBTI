@@ -9,12 +9,22 @@ import UIKit
 import SnapKit
 
 final class ProfileSettingViewController: BaseViewController {
+    private let viewModel = ProfileSettingViewModel()
+    private lazy var buttons = [iButton, nButton, fButton, jButton, eButton, sButton, tButton, pButton]
+    private let mbtiSet: [Character: Character] = [
+        "E": "I", "I": "E",
+        "S": "N", "N": "S",
+        "T": "F", "F": "T",
+        "J": "P", "P": "J"
+    ]
+    
     
     private let profileImageView = {
         let imageView = UIImageView()
         imageView.layer.borderColor = UIColor.dalkomBlue.cgColor
         imageView.layer.borderWidth = 5
-
+        imageView.contentMode = .scaleAspectFill
+        
         DispatchQueue.main.async {
             imageView.layer.cornerRadius = imageView.frame.height / 2
         }
@@ -26,7 +36,7 @@ final class ProfileSettingViewController: BaseViewController {
         let button = UIButton()
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 12)
         let symbolImage = UIImage(systemName: "camera.fill", withConfiguration: symbolConfig)
-            
+        
         button.setImage(symbolImage, for: .normal)
         button.tintColor = .white
         button.backgroundColor = .dalkomBlue
@@ -36,7 +46,7 @@ final class ProfileSettingViewController: BaseViewController {
         button.clipsToBounds = true
         return button
     }()
-
+    
     
     private let nicknameTextField = {
         let textField = UnderlineTextField()
@@ -72,7 +82,7 @@ final class ProfileSettingViewController: BaseViewController {
         stackView.spacing = 10
         return stackView
     }()
-       
+    
     private let secondRowStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -80,7 +90,7 @@ final class ProfileSettingViewController: BaseViewController {
         stackView.spacing = 10
         return stackView
     }()
-       
+    
     private let mbtiStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -103,11 +113,14 @@ final class ProfileSettingViewController: BaseViewController {
         button.configuration = .dalkomStyle(title: "완료", fgColor: .dalkomWhite)
         return button
     }()
-       
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavTitle()
+        bindData()
+        addTarget()
+        setRandomProfileImage()
     }
     
     override func configureHierarchy() {
@@ -155,19 +168,21 @@ final class ProfileSettingViewController: BaseViewController {
             make.top.equalTo(profileImageView.snp.bottom).offset(48)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(24)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44) 
+            make.height.equalTo(44)
         }
         
         stateLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameTextField.snp.bottom).offset(8)
+            make.top.equalTo(nicknameTextField.snp.bottom).offset(24)
             make.horizontalEdges.equalTo(nicknameTextField)
+            make.height.greaterThanOrEqualTo(20)
+
         }
         
         mbtiLabelButtonWrappedStackView.snp.makeConstraints { make in
             make.top.equalTo(stateLabel.snp.bottom).offset(80)
             make.horizontalEdges.equalTo(nicknameTextField)
         }
-
+        
         [eButton, iButton, sButton, nButton, tButton, fButton, jButton, pButton].forEach { button in
             button.snp.makeConstraints { make in
                 make.width.height.equalTo(50)
@@ -190,5 +205,69 @@ final class ProfileSettingViewController: BaseViewController {
 extension ProfileSettingViewController {
     private func configureNavTitle() {
         navigationItem.title = Constants.UI.Title.profileSetting
+    }
+}
+
+extension ProfileSettingViewController {
+    private func bindData() {
+        viewModel.output.nicknameState.bind { [weak self] state in
+            self?.stateLabel.text = state.message
+            self?.stateLabel.textColor = state.color
+        }
+        
+        viewModel.output.selectedMBTI.bind { [weak self] selectedSet in
+            self?.updateMbtiButtons(selectedSet: selectedSet)
+        }
+        
+        viewModel.output.isDoneButtonEnabled.bind { [weak self] isEnabled in
+            self?.doneButton.isEnabled = isEnabled
+            self?.doneButton.configuration?.baseBackgroundColor = isEnabled ? .dalkomBlue : .dalkomDarkGray
+        }
+    }
+    
+    private func addTarget() {
+        let profileTapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        profileImageView.addGestureRecognizer(profileTapGesture)
+        
+        nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
+        buttons.forEach {
+            $0.addTarget(self, action: #selector(mbtiButtonTapped(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        viewModel.input.nicknameText.value = textField.text
+    }
+    
+    @objc private func mbtiButtonTapped(_ sender: MBTIButton) {
+        guard let title = sender.title(for: .normal),
+              let selectedChar = title.first,
+              let charSet = mbtiSet[selectedChar] else {
+            return
+        }
+        
+        viewModel.input.mbtiButtonTapped.value = (selected: selectedChar, set: charSet)
+    }
+    
+    @objc private func profileImageTapped() {
+        print("프로필 이미지")
+    }
+    
+    private func updateMbtiButtons(selectedSet: Set<Character>) {
+        buttons.forEach { button in
+            guard let title = button.title(for: .normal),
+                  let char = title.first else {
+                return
+            }
+            
+            button.isSelected = selectedSet.contains(char)
+        }
+    }
+    
+    private func setRandomProfileImage() {
+        let randomNumber = Int.random(in: 1...12)
+        let randomImageName = "\(randomNumber)"
+        profileImageView.image = UIImage(named: randomImageName)
     }
 }
