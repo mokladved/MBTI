@@ -31,8 +31,8 @@ final class UnderlineTextField: UITextField, UIConfigurable {
     
     func configureLayout() {
         underlineView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(12)
-            make.bottom.equalToSuperview().offset(8)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview().offset(4)
             make.height.equalTo(1)
         }
     }
