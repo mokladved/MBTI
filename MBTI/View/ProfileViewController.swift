@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ViewController: BaseViewController {
+final class ProfileViewController: BaseViewController {
     
     private let startButton = {
         let button = UIButton()
