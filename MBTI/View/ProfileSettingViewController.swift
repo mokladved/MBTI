@@ -10,6 +10,7 @@ import SnapKit
 
 final class ProfileSettingViewController: BaseViewController {
     private let viewModel = ProfileSettingViewModel()
+    private var currentProfileImageName: String = ""
     private lazy var buttons = [iButton, nButton, fButton, jButton, eButton, sButton, tButton, pButton]
     private let mbtiSet: [Character: Character] = [
         "E": "I", "I": "E",
@@ -22,6 +23,7 @@ final class ProfileSettingViewController: BaseViewController {
     private let profileImageView = {
         let imageView = UIImageView()
         imageView.layer.borderColor = UIColor.dalkomBlue.cgColor
+        imageView.isUserInteractionEnabled = true 
         imageView.layer.borderWidth = 5
         imageView.contentMode = .scaleAspectFill
         
@@ -251,7 +253,20 @@ extension ProfileSettingViewController {
     }
     
     @objc private func profileImageTapped() {
-        print("프로필 이미지")
+        let select = ProfileImageViewModel(initialName: self.currentProfileImageName)
+
+        select.output.saveCompleted.bind { [weak self] newImageName in
+            guard let self = self,
+                  let newImageName = newImageName else {
+                return
+            }
+            
+            self.currentProfileImageName = newImageName
+            self.profileImageView.image = UIImage(named: newImageName)
+        }
+        
+        let selectVC = ProfileImageViewController(viewModel: select)
+        navigationController?.pushViewController(selectVC, animated: true)
     }
     
     private func updateMbtiButtons(selectedSet: Set<Character>) {
@@ -269,5 +284,8 @@ extension ProfileSettingViewController {
         let randomNumber = Int.random(in: 1...12)
         let randomImageName = "\(randomNumber)"
         profileImageView.image = UIImage(named: randomImageName)
+        
+        currentProfileImageName = randomImageName
+
     }
 }
